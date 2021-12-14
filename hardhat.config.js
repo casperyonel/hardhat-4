@@ -1,4 +1,7 @@
 require("@nomiclabs/hardhat-waffle");
+require('dotenv').config()
+
+const UNFURA_URL = "https://kovan.infura.io/v3/c765fea966964da58dacb7a38ddf910c"
 
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
@@ -21,6 +24,10 @@ module.exports = {
   networks: {
     localhost: {
       chainId: 31337
+    },
+    kovan: {
+      url: UNFURA_URL,
+      accounts: [`0x${process.env.PRIVATE_KEY}`]
     }
   }
 };
