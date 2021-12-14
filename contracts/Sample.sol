@@ -4,17 +4,33 @@ pragma solidity ^0.8.0;
 contract myContract {
     uint a;
 
-    struct User {
-        string name;
+    event NewTrade (
+        uint date, 
+        address indexed from, 
+        address to, 
+        uint amount
+    ); 
+
+    function trade(address to, uint amount) external {
+        emit NewTrade(block.timestamp, msg.sender, to, amount);
+    }
+ 
+    mapping(address => uint) balances;
+
+    function invest() external payable {
+        if (msg.value < 1 ether) {
+            revert();
+        }
+        balances[msg.sender] += msg.value;
     }
 
-    User[] users;
-    // This is a seperate array from struct User. 
-
-    function foo() external {
-        User storage user = users[0];
-        // This is the pointer
-
-        user.name = 'ghost';
+    function balanceOf() external view returns(uint) {
+        return address(this).balance;
     }
+
+    function sendEther (address payable recipient) external {
+        recipient.transfer(100);
+    }
+
+    address payable[] recipients;
 }
