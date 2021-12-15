@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 contract LoanFactory {
+    address _user1;
     Loan[] loans;
     function createLoan() external  {
         Loan loan1 = new Loan(100); // Pointer creates new Loan contract
@@ -21,6 +22,36 @@ contract Loan {
         require(_address != msg.sender);
         require(address(this).balance > amountRepay); // Confirm enough funds
         _address.balance += amountRepay;
+    }
+
+
+    address admin;
+    modifier onlyAdmin() {
+        require(msg.sender == admin, "Caller is not the admin");
+    }
+    function withdraw() external onlyAdmin() {
+    }
+
+
+    function() payable external {
+    }
+
+
+
+}
+
+
+
+
+library myLibrary {
+    function add10( unint a) pure public returns (uint) {
+        return a + 10;
+    }
+}
+
+contract new {
+    function foo() external {
+        uint result = myLibrary.add10(10)
     }
 }
 
